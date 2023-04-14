@@ -18,7 +18,7 @@ class FirebaseApi extends GetxController {
     final result = await ref.listAll();
 
     final urls = await _getDownloadLinks(result.items);
-    
+    update();
     return urls
         .asMap()
         .map((index, url) {
