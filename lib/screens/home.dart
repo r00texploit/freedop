@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:today/audio/main.dart';
-import 'package:today/pages/home.dart';
+// import 'package:today/audio/main.dart';
+// import 'package:today/photo/home.dart';
+import 'package:today/screens/audio/main.dart';
 import 'package:today/screens/document.dart';
 // import 'package:today/audio/screens/app.dart';
 import 'package:today/screens/new_video.dart';
+import 'package:today/screens/photo/home.dart';
 import 'package:today/screens/post.dart';
 import 'package:today/screens/profile.dart';
 import 'package:today/screens/video_hero_animation.dart';

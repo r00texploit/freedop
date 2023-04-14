@@ -70,13 +70,13 @@ class _MainPageState extends State<MainPage> {
                           itemCount: files.length,
                           itemBuilder: (context, index) {
                             final file = files[index];
-                            if (file.name.contains("jpg") ||
-                                file.name.contains("png") ||
-                                file.name.contains("jpeg")) {
+                            // if (file.name.contains("jpg") ||
+                            //     file.name.contains("png") ||
+                            //     file.name.contains("jpeg")) {
                               return buildFile(context, file);
-                            } else {
-                              return const Text("");
-                            }
+                            // } else {
+                              // return const Text("");
+                            // }
                           },
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(

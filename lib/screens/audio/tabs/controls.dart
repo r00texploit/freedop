@@ -6,12 +6,18 @@ import 'package:audioplayers/audioplayers.dart';
 // import 'package:audioplayers_example/components/txt.dart';
 // import 'package:audioplayers_example/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:today/audio/components/btn.dart';
-import 'package:today/audio/components/list_tile.dart';
-import 'package:today/audio/components/tab_content.dart';
-import 'package:today/audio/components/tgl.dart';
-import 'package:today/audio/components/txt.dart';
-import 'package:today/audio/utils.dart';
+import 'package:today/screens/audio/components/btn.dart';
+import 'package:today/screens/audio/components/list_tile.dart';
+import 'package:today/screens/audio/components/tab_content.dart';
+import 'package:today/screens/audio/components/tgl.dart';
+import 'package:today/screens/audio/components/txt.dart';
+import 'package:today/screens/audio/utils.dart';
+// import 'package:today/audio/components/btn.dart';
+// import 'package:today/audio/components/list_tile.dart';
+// import 'package:today/audio/components/tab_content.dart';
+// import 'package:today/audio/components/tgl.dart';
+// import 'package:today/audio/components/txt.dart';
+// import 'package:today/audio/utils.dart';
 
 class ControlsTab extends StatefulWidget {
   final AudioPlayer player;
