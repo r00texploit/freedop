@@ -48,75 +48,80 @@ class ThumbnailResult {
   const ThumbnailResult({this.image, this.dataSize, this.height, this.width});
 }
 
-Future<ThumbnailResult> genThumbnail(ThumbnailRequest r) async {
+Future<List<ThumbnailResult>> genThumbnail(List<ThumbnailRequest> r) async {
   //WidgetsFlutterBinding.ensureInitialized();
   Uint8List? bytes;
-  final Completer<ThumbnailResult> completer = Completer();
-  if (r.thumbnailPath != null) {
-    log("video: ${r.video!}");
-    log("image Format: ${r.imageFormat!}");
-    log("maxHeight: ${r.maxHeight!}");
-    log("maxWidth: ${r.maxWidth!}");
-    log("timesMS: ${r.timeMs!}");
-    log("quality: ${r.quality!}");
+  final Completer<List<ThumbnailResult>> completer = Completer();
+  for (var req in r) {
+    if (req.thumbnailPath != null) {
+      log("video: ${req.video!}");
+      log("image Format: ${req.imageFormat!}");
+      log("maxHeight: ${req.maxHeight!}");
+      log("maxWidth: ${req.maxWidth!}");
+      log("timesMS: ${req.timeMs!}");
+      log("quality: ${req.quality!}");
 
-    final thumbnailPath = await VideoThumbnail.thumbnailFile(
-        video: r.video!,
-        headers: {
-          "USERHEADER1": "user defined header1",
-          "USERHEADER2": "user defined header2",
-        },
-        thumbnailPath: r.thumbnailPath,
-        imageFormat: ImageFormat.JPEG,
-        maxHeight: 0,
-        maxWidth: 0,
-        timeMs: 0,
-        quality: 50);
+      final thumbnailPath = await VideoThumbnail.thumbnailFile(
+          video: req.video!,
+          headers: {
+            "USERHEADER1": "user defined header1",
+            "USERHEADER2": "user defined header2",
+          },
+          thumbnailPath: req.thumbnailPath,
+          imageFormat: req.imageFormat!,
+          maxHeight: req.maxHeight!,
+          maxWidth: req.maxWidth!,
+          timeMs: req.timeMs!,
+          quality: req.quality!);
 
-    print("thumbnail file is located: $thumbnailPath");
+      print("thumbnail file is located: $thumbnailPath");
 
-    final file = File(thumbnailPath!);
-    bytes = file.readAsBytesSync();
-  } else {
-    log("video: ${r.video!}");
-    log("image Format: ${r.imageFormat!}");
-    log("maxHeight: ${r.maxHeight!}");
-    log("maxWidth: ${r.maxWidth!}");
-    log("timesMS: ${r.timeMs!}");
-    log("quality: ${r.quality!}");
+      final file = File(thumbnailPath!);
+      bytes = file.readAsBytesSync();
+    } else {
+      log("video: ${req.video!}");
+      log("image Format: ${req.imageFormat!}");
+      log("maxHeight: ${req.maxHeight!}");
+      log("maxWidth: ${req.maxWidth!}");
+      log("timesMS: ${req.timeMs!}");
+      log("quality: ${req.quality!}");
 
-    bytes = (await VideoThumbnail.thumbnailData(
-        video: r.video!,
-        headers: {
-          "USERHEADER1": "user defined header1",
-          "USERHEADER2": "user defined header2",
-        },
-        imageFormat: r.imageFormat!,
-        maxHeight: r.maxHeight!,
-        maxWidth: r.maxWidth!,
-        timeMs: r.timeMs!,
-        quality: r.quality!))!;
-  }
+      bytes = (await VideoThumbnail.thumbnailData(
+          video: req.video!,
+          headers: {
+            "USERHEADER1": "user defined header1",
+            "USERHEADER2": "user defined header2",
+          },
+          imageFormat: req.imageFormat!,
+          maxHeight: req.maxHeight!,
+          maxWidth: req.maxWidth!,
+          timeMs: req.timeMs!,
+          quality: req.quality!))!;
+    }
+  // }
 
   int _imageDataSize = bytes.length;
   print("image size: $_imageDataSize");
-
+  
   final _image = Image.memory(bytes);
   _image.image
       .resolve(ImageConfiguration())
       .addListener(ImageStreamListener((ImageInfo info, bool _) {
-    completer.complete(ThumbnailResult(
+      var res = <ThumbnailResult>[];
+      res.add(ThumbnailResult(
       image: _image,
       dataSize: _imageDataSize,
       height: info.image.height,
       width: info.image.width,
     ));
+    completer.complete(res);
   }));
+}
   return completer.future;
 }
 
 class GenThumbnailImage extends StatefulWidget {
-  final ThumbnailRequest? thumbnailRequest;
+  final List<ThumbnailRequest>? thumbnailRequest;
 
   const GenThumbnailImage({Key? key, this.thumbnailRequest}) : super(key: key);
 
@@ -127,7 +132,7 @@ class GenThumbnailImage extends StatefulWidget {
 class _GenThumbnailImageState extends State<GenThumbnailImage> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ThumbnailResult>(
+    return FutureBuilder<List<ThumbnailResult>>(
       future: genThumbnail(widget.thumbnailRequest!),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -163,8 +168,8 @@ class _GenThumbnailImageState extends State<GenThumbnailImage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                    "Generating the thumbnail for: ${widget.thumbnailRequest!.video}..."),
+                // Text(
+                //     "Generating the thumbnail for: ${widget.thumbnailRequest!.video}..."),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -207,6 +212,22 @@ class _DemoHomeState extends State<DemoHome> {
   void initState() {
     super.initState();
     getTemporaryDirectory().then((d) => _tempDir = d.path);
+  }
+
+ List<ThumbnailRequest> thum() {
+    var thumbnailRequest = <ThumbnailRequest>[];
+    for (int i = 0; i < 5; i++) {
+      thumbnailRequest.add(ThumbnailRequest(
+          video:
+              "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+          thumbnailPath: _tempDir,
+          imageFormat: ImageFormat.JPEG,
+          maxHeight: 0,
+          maxWidth: 0,
+          timeMs: 0,
+          quality: 0));
+    }
+    return thumbnailRequest;
   }
 
   @override
@@ -330,194 +351,188 @@ class _DemoHomeState extends State<DemoHome> {
         ),
       )
     ];
-    var thumbnailRequest = ThumbnailRequest(
-     video: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-                      thumbnailPath: _tempDir,
-                          imageFormat: ImageFormat.JPEG,
-                          maxHeight: 0,
-                          maxWidth: 0,
-                          timeMs: 0,
-                          quality: 0
-    );
+
     return Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Thumbnail Plugin example'),
-        // ),
-        body: 
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            FutureBuilder<ThumbnailResult>(
-      future: genThumbnail(thumbnailRequest),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          final _image = snapshot.data.image;
-          final _width = snapshot.data.width;
-          final _height = snapshot.data.height;
-          final _dataSize = snapshot.data.dataSize;
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              // Center(
-              //   child: Text(
-              //       "Image ${widget.thumbnailRequest!.thumbnailPath == null ? 'data size' : 'file size'}: $_dataSize, width:$_width, height:$_height"),
-              // ),
-              Container(
-                color: Colors.grey,
-                height: 1.0,
-              ),
-              _image,
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Container(
-            padding: EdgeInsets.all(8.0),
-            color: Colors.red,
-            child: Text(
-              "Error:\n${snapshot.error.toString()}",
-            ),
-          );
-        } else {
-          return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                    "Generating the thumbnail for: ${thumbnailRequest.video}..."),
-                SizedBox(
-                  height: 10.0,
-                ),
-                CircularProgressIndicator(),
-              ]);
-        }
-      },
-    ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 8.0),
-            //   child: TextField(
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       filled: true,
-            //       isDense: true,
-            //       labelText: "Video URI",
-            //     ),
-            //     maxLines: null,
-            //     controller: _video,
-            //     focusNode: _editNode,
-            //     keyboardType: TextInputType.url,
-            //     textInputAction: TextInputAction.done,
-            //     onEditingComplete: () {
-            //       _editNode.unfocus();
-            //     },
-            //   ),
-            // ),
-            // for (var i in _settings) i,
-            Expanded(
-              child: Container(
-                color: Colors.grey[300],
-                child: Scrollbar(
-                  child: ListView(
-                    shrinkWrap: true,
+      // appBar: AppBar(
+      //   title: const Text('Thumbnail Plugin example'),
+      // ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FutureBuilder<List<ThumbnailResult>>(
+            future: genThumbnail(thum()),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {  
+                if (snapshot.hasData) {
+                  for (var element in snapshot.data) {
+                  final _image = element.image;
+                  final _width = element.width;
+                  final _height = element.height;
+                  final _dataSize = element.dataSize;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      (_futreImage != null) ? _futreImage! : SizedBox(),
+                      // Center(
+                      //   child: Text(
+                      //       "Image ${widget.thumbnailRequest!.thumbnailPath == null ? 'data size' : 'file size'}: $_dataSize, width:$_width, height:$_height"),
+                      // ),
+                      Container(
+                        color: Colors.grey,
+                        height: 1.0,
+                      ),
+                      _image,
                     ],
-                  ),
+                  );
+                }} 
+                if (snapshot.hasError) {
+                  return Container(
+                    padding: EdgeInsets.all(8.0),
+                    color: Colors.red,
+                    child: Text(
+                      "Error:\n${snapshot.error.toString()}",
+                    ),
+                  );
+                } else {
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // Text(
+                        //     "Generating the thumbnail for: ${thumbnailRequest.video}..."),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        CircularProgressIndicator(),
+                      ]);
+                }
+              } 
+            // },
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 8.0),
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       border: OutlineInputBorder(),
+          //       filled: true,
+          //       isDense: true,
+          //       labelText: "Video URI",
+          //     ),
+          //     maxLines: null,
+          //     controller: _video,
+          //     focusNode: _editNode,
+          //     keyboardType: TextInputType.url,
+          //     textInputAction: TextInputAction.done,
+          //     onEditingComplete: () {
+          //       _editNode.unfocus();
+          //     },
+          //   ),
+          // ),
+          // for (var i in _settings) i,
+          Expanded(
+            child: Container(
+              color: Colors.grey[300],
+              child: Scrollbar(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    (_futreImage != null) ? _futreImage! : SizedBox(),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-        // drawer: Drawer(
-        //   child: Column(
-        //     children: <Widget>[
-        //       AppBar(
-        //         title: const Text("Settings"),
-        //         actions: <Widget>[
-        //           IconButton(
-        //             icon: Icon(Icons.close),
-        //             onPressed: () => Navigator.pop(context),
-        //           )
-        //         ],
-        //       ),
-        //       // for (var i in _settings) i,
-        //     ],
-        //   ),
-        // ),
-        // floatingActionButton: Row(
-        //   mainAxisAlignment: MainAxisAlignment.end,
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: <Widget>[
-        //     FloatingActionButton(
-        //       onPressed: () async {
-        //         var video = await FilesystemPicker.open(
-        //             context: context,
-        //             rootDirectory: Directory("storage/emulated/0"));
-        //         setState(() {
-        //           _video.text = video!;
-        //         });
-        //       },
-        //       child: Icon(Icons.videocam),
-        //       tooltip: "Capture a video",
-        //     ),
-        //     const SizedBox(
-        //       width: 5.0,
-        //     ),
-        //     FloatingActionButton(
-        //       onPressed: () async {
-        //         var video = await FilesystemPicker.open(
-        //             context: context,
-        //             rootDirectory: Directory("storage/emulated/0"));
-        //         setState(() {
-        //           _video.text = video!;
-        //         });
-        //       },
-        //       child: Icon(Icons.local_movies),
-        //       tooltip: "Pick a video",
-        //     ),
-        //     const SizedBox(
-        //       width: 20.0,
-        //     ),
-        //     FloatingActionButton(
-        //       tooltip: "Generate a data of thumbnail",
-        //       onPressed: () async {
-        //         setState(() {
-        //           _futreImage = GenThumbnailImage(
-        //               thumbnailRequest: ThumbnailRequest(
-        //                   video: _video.text,
-        //                   thumbnailPath: null,
-        //                   imageFormat: _format,
-        //                   maxHeight: _sizeH,
-        //                   maxWidth: _sizeW,
-        //                   timeMs: _timeMs,
-        //                   quality: _quality));
-        //         });
-        //       },
-        //       child: const Text("Data"),
-        //     ),
-        //     const SizedBox(
-        //       width: 5.0,
-        //     ),
-        //     FloatingActionButton(
-        //       tooltip: "Generate a file of thumbnail",
-        //       onPressed: () async {
-        //         setState(() {
-        //           _futreImage = GenThumbnailImage(
-        //               thumbnailRequest: ThumbnailRequest(
-        //                   video: _video.text,
-        //                   thumbnailPath: _tempDir,
-        //                   imageFormat: _format,
-        //                   maxHeight: _sizeH,
-        //                   maxWidth: _sizeW,
-        //                   timeMs: _timeMs,
-        //                   quality: _quality));
-        //         });
-        //       },
-        //       child: const Text("File"),
-        //     ),
-        //   ],
-        // )
-        );
+          ),
+        ],
+      ),
+      // drawer: Drawer(
+      //   child: Column(
+      //     children: <Widget>[
+      //       AppBar(
+      //         title: const Text("Settings"),
+      //         actions: <Widget>[
+      //           IconButton(
+      //             icon: Icon(Icons.close),
+      //             onPressed: () => Navigator.pop(context),
+      //           )
+      //         ],
+      //       ),
+      //       // for (var i in _settings) i,
+      //     ],
+      //   ),
+      // ),
+      // floatingActionButton: Row(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: <Widget>[
+      //     FloatingActionButton(
+      //       onPressed: () async {
+      //         var video = await FilesystemPicker.open(
+      //             context: context,
+      //             rootDirectory: Directory("storage/emulated/0"));
+      //         setState(() {
+      //           _video.text = video!;
+      //         });
+      //       },
+      //       child: Icon(Icons.videocam),
+      //       tooltip: "Capture a video",
+      //     ),
+      //     const SizedBox(
+      //       width: 5.0,
+      //     ),
+      //     FloatingActionButton(
+      //       onPressed: () async {
+      //         var video = await FilesystemPicker.open(
+      //             context: context,
+      //             rootDirectory: Directory("storage/emulated/0"));
+      //         setState(() {
+      //           _video.text = video!;
+      //         });
+      //       },
+      //       child: Icon(Icons.local_movies),
+      //       tooltip: "Pick a video",
+      //     ),
+      //     const SizedBox(
+      //       width: 20.0,
+      //     ),
+      //     FloatingActionButton(
+      //       tooltip: "Generate a data of thumbnail",
+      //       onPressed: () async {
+      //         setState(() {
+      //           _futreImage = GenThumbnailImage(
+      //               thumbnailRequest: ThumbnailRequest(
+      //                   video: _video.text,
+      //                   thumbnailPath: null,
+      //                   imageFormat: _format,
+      //                   maxHeight: _sizeH,
+      //                   maxWidth: _sizeW,
+      //                   timeMs: _timeMs,
+      //                   quality: _quality));
+      //         });
+      //       },
+      //       child: const Text("Data"),
+      //     ),
+      //     const SizedBox(
+      //       width: 5.0,
+      //     ),
+      //     FloatingActionButton(
+      //       tooltip: "Generate a file of thumbnail",
+      //       onPressed: () async {
+      //         setState(() {
+      //           _futreImage = GenThumbnailImage(
+      //               thumbnailRequest: ThumbnailRequest(
+      //                   video: _video.text,
+      //                   thumbnailPath: _tempDir,
+      //                   imageFormat: _format,
+      //                   maxHeight: _sizeH,
+      //                   maxWidth: _sizeW,
+      //                   timeMs: _timeMs,
+      //                   quality: _quality));
+      //         });
+      //       },
+      //       child: const Text("File"),
+      //     ),
+      //   ],
+      // )
+    );
   }
 }
