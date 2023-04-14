@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:today/model/user_model.dart';
 import 'package:today/screens/home.dart';
 import 'package:today/screens/login.dart';
@@ -30,8 +31,8 @@ class AuthController extends GetxController {
   RxList<Users> user_profile = RxList<Users>([]);
   static FirebaseAuth auth = FirebaseAuth.instance;
   bool showSpinner = false;
-
-  late Widget route;
+  SharedPreferences? sh;
+  Widget? route;
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -40,7 +41,7 @@ class AuthController extends GetxController {
   @override
   void onReady() {
     _user.bindStream(onAuthStateChanged);
-    ever(_user, _initialScreen);
+    // ever(_user, _initialScreen);
     super.onReady();
   }
 
@@ -52,14 +53,17 @@ class AuthController extends GetxController {
 
     _user = Rx<User?>(auth.currentUser);
     _user.bindStream(onAuthStateChanged);
-    ever(_user, _initialScreen);
+    // ever(_user, _initialScreen);
+    _initialScreen();
     super.onInit();
   }
 
   RxList<Users> photos = RxList<Users>([]);
   String? get user_ch => _user.value!.email;
-  _initialScreen(User? user) {
-    if (user == null) {
+  _initialScreen() async {
+    sh = await SharedPreferences.getInstance();
+    bool? signed = sh!.getBool("signed");
+    if (signed == false) {
       route = LoginScreen();
     } else {
       route = const home();
@@ -149,7 +153,10 @@ class AuthController extends GetxController {
             onPressed: () async {
               await auth
                   .signOut()
-                  .then((value) => Get.offAll(() => LoginScreen()));
+                  .then((value) { 
+                      sh!.setBool("signed", false);
+                      Get.offAll(() => LoginScreen());
+                    });
             },
             child: const Text('تاكيد')),
         TextButton(
@@ -189,7 +196,8 @@ class AuthController extends GetxController {
           'email': email.text,
           'uid': credential.user!.uid,
         });
-
+        sh = await SharedPreferences.getInstance();
+        sh!.setBool("signed",true);
         showbar("About User", "User message", "تم التسجيل بنجاح!!", true);
         Get.to(() => const home());
       } on FirebaseAuthException catch (e) {
@@ -231,6 +239,8 @@ class AuthController extends GetxController {
 
         update();
         log("message:${profile}");
+        sh = await SharedPreferences.getInstance();
+        sh!.setBool("signed",true);
         Get.offAll(() => const home());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {

@@ -33,7 +33,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
-  final AuthController controller = Get.put(AuthController());
+  final AuthController authcontroller = Get.put(AuthController());
   var theme = Get.find<ThemeModel>();
   
   @override
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: controller.themeData,
           home: SplashScreenView(
-            navigateRoute: LoginScreen(),
+            navigateRoute: authcontroller.route,
             backgroundColor: Colors.indigo,
             duration: 5000,
             imageSize: 300,

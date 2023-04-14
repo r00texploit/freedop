@@ -22,13 +22,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late Future<List<FirebaseFile>> futureFiles;
-futuredelay() async {
-    futureFiles =
-         FirebaseApi().listAll("${FirebaseAuth.instance.currentUser!.uid}/images");
-}
+
   @override
   void initState() {
     super.initState();
+
+    futureFiles =
+        FirebaseApi.listAll("${FirebaseAuth.instance.currentUser!.uid}/images");
   }
 
   @override
