@@ -33,6 +33,7 @@ class ImagePage extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
             ),
+
             IconButton(
               icon: Icon(Icons.delete),
               onPressed: () async {
@@ -48,6 +49,18 @@ class ImagePage extends StatelessWidget {
                 final snackBar = SnackBar(
                   content: Text('deleted ${file.name}'),
                 );
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
+              IconButton(
+              icon: Icon(Icons.remove_circle),
+              onPressed: () async {
+                await FirebaseApi().deleteFirebase(file.ref);
+                log("message: ${file.url}");
+                final snackBar = SnackBar(
+                  content: Text('Deleted ${file.name}'),
+                );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
             ),
@@ -60,7 +73,7 @@ class ImagePage extends StatelessWidget {
           child: Image.network(
             file.url,
             height: double.infinity,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ));
   }
