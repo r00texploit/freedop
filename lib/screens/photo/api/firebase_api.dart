@@ -13,7 +13,7 @@ class FirebaseApi extends GetxController {
   static Future<List<String>> _getDownloadLinks(List<Reference> refs) =>
       Future.wait(refs.map((ref) => ref.getDownloadURL()).toList());
 
-   Future<List<FirebaseFile>> listAll(String path) async {
+  Future<List<FirebaseFile>> listAll(String path) async {
     final ref = FirebaseStorage.instance.ref(path);
     final result = await ref.listAll();
 
@@ -30,7 +30,6 @@ class FirebaseApi extends GetxController {
         })
         .values
         .toList();
-        
   }
 
   static Future deleteFile(File file) async {
@@ -53,17 +52,18 @@ class FirebaseApi extends GetxController {
         .where("url", isEqualTo: ref.getDownloadURL().toString())
         .snapshots();
     var str;
-    url.map(
-      (event) => event.docs.map((e) { 
-        str = e.data();
-        update();
-      })//.toList(),
-    ).toList();
+    url
+        .map((event) => event.docs.map((e) {
+                  str = e.data();
+                  update();
+                }) //.toList(),
+            )
+        .toList();
     log("url:${str.toString()}");
     // str.delete();
     update();
     ref.delete();
-    
+
     Get.back();
   }
 

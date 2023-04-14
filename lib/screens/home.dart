@@ -126,7 +126,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                   ),
                   Container(
                     color: Colors.pink,
-                    child: ChewieDemo(),
+                    child: const VideoPlayersList(), //ChewieDemo(),
                   ),
                   Container(
                     color: Colors.pink,
