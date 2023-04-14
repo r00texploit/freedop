@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() => runApp(MyApp());
@@ -379,10 +380,10 @@ class _DemoHomeState extends State<DemoHome> {
           children: <Widget>[
             FloatingActionButton(
               onPressed: () async {
-                XFile? video =
-                    await ImagePicker().pickVideo(source: ImageSource.camera);
+                var video =
+                    await FilesystemPicker.open(context: context, rootDirectory: Directory("storage/emulated/0"));
                 setState(() {
-                  _video.text = video!.path;
+                  _video.text = video!;
                 });
               },
               child: Icon(Icons.videocam),
@@ -393,10 +394,10 @@ class _DemoHomeState extends State<DemoHome> {
             ),
             FloatingActionButton(
               onPressed: () async {
-                XFile? video =
-                    await ImagePicker().pickVideo(source: ImageSource.gallery);
+                var video =
+                    await FilesystemPicker.open(context: context, rootDirectory: Directory("storage/emulated/0"));
                 setState(() {
-                  _video.text = video!.path;
+                  _video.text = video!;
                 });
               },
               child: Icon(Icons.local_movies),

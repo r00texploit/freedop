@@ -11,6 +11,7 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:today/controller/auth_controller.dart';
 
 import 'package:today/screens/login.dart';
+import 'package:today/screens/thumpnial.dart';
 import 'package:today/widgets/theme.dart';
 import 'package:today/widgets/theme/constants.dart';
 import 'package:today/widgets/theme/style.dart';
@@ -44,16 +45,17 @@ class MyApp extends StatelessWidget {
           title: '',
           debugShowCheckedModeBanner: false,
           theme: controller.themeData,
-          home: SplashScreenView(
-            navigateRoute: authcontroller.route,
-            backgroundColor: Colors.indigo,
-            duration: 5000,
-            imageSize: 300,
-            imageSrc: 'assets/images/logo.png',
-            text: 'Free DOP-Domain Of Privacy',
-            textType: TextType.TyperAnimatedText,
-            textStyle: const TextStyle(fontSize: 30.0, color: Colors.white),
-          ));
+          home: DemoHome()); 
+          // SplashScreenView(
+          //   navigateRoute: authcontroller.route,
+          //   backgroundColor: Colors.indigo,
+          //   duration: 5000,
+          //   imageSize: 300,
+          //   imageSrc: 'assets/images/logo.png',
+          //   text: 'Free DOP-Domain Of Privacy',
+          //   textType: TextType.TyperAnimatedText,
+          //   textStyle: const TextStyle(fontSize: 30.0, color: Colors.white),
+          // ));
       
     }));
   }
