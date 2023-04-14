@@ -30,8 +30,6 @@ class FirebaseApi {
 
   static Future deleteFile(File file) async {
     final dir = Directory('/storage/emulated/0/Download');
-    //  await getExternalStorageDirectory();
-    // final file = File('${dir.path}/${ref.name}');
     var f = File("${dir.path}/${file.path}");
     if (!await f.exists()) {
       log("message: not found");
@@ -42,7 +40,6 @@ class FirebaseApi {
     log("message file1:${f.path} ");
     log("message file2:${file.path} ");
 
-    // await ref.writeToFile(file);
   }
 
   static Future downloadFile(Reference ref) async {

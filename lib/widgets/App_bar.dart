@@ -25,9 +25,6 @@ class _App_barState extends State<App_bar> {
     return GetBuilder<AuthController>(
         init: AuthController(),
         builder: ((logic) {
-          // log("${logic.profileurl!}");
-          // var con = Get.find<>
-          // var profile = FirebaseFirestore.instance.collection("user").doc(FirebaseAuth.instance.currentUser!.uid).get();
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -35,27 +32,20 @@ class _App_barState extends State<App_bar> {
               children: [
                 CircleAvatar(
                   radius: 30.0,
-                  backgroundImage: logic.profileurl == null ? NetworkImage("https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png") : NetworkImage(logic.profileurl!),
+                  backgroundImage: logic.profileurl == null
+                      ? NetworkImage(
+                          "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png")
+                      : NetworkImage(logic.profileurl!),
                   backgroundColor: Colors.transparent,
                 ),
                 Row(
                   children: [
-                    // CircleAvatar(
-                    //   radius: 21,
-                    //   backgroundColor: Colors.grey.shade300,
-                    //   child: Icon(
-                    //     Icons.search,
-                    //     size: 26,
-                    //     color: Colors.grey.shade600,
-                    //   ),
-                    // ),
                     const SizedBox(width: 13),
                     CircleAvatar(
                       radius: 21,
                       backgroundColor: Colors.grey.shade300,
                       child: IconButton(
                           onPressed: () {
-                            // AuthController authController = AuthController();
                             logic.signOut();
                           },
                           icon: const Icon(Icons.logout)),
@@ -66,33 +56,13 @@ class _App_barState extends State<App_bar> {
                       backgroundColor: Colors.grey.shade300,
                       child: IconButton(
                           onPressed: () {
-                              theme.setisDark(!theme.isDark);
-                            // log(themeNotifier.isDark.toString());
+                            theme.setisDark(!theme.isDark);
                           },
                           icon: const Icon(
                             Icons.sunny,
                             color: Colors.white,
                           )),
                     ),
-                    //   InkWell(
-                    //   onTap: () {
-                    //     var themeNotifier = ThemeModel();
-                    //     themeNotifier.isDark
-                    //         ? themeNotifier.isDark = false
-                    //         : themeNotifier.isDark = true;
-                    //   },
-                    //   child: const ListTile(
-                    //     leading: Icon(
-                    //       Icons.dark_mode,
-                    //     ),
-                    //     title: Text(
-                    //       "المظهر الليلي",
-                    //       style: TextStyle(
-                    //         fontSize: 15,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 )
               ],

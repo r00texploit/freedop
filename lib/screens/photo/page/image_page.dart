@@ -62,13 +62,6 @@ class ImagePage extends StatelessWidget {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
-        )
-        // : Center(
-        //     child: Text(
-        //       'Cannot be displayed',
-        //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        //     ),
-        //   ),
-        );
+        ));
   }
 }

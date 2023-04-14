@@ -1,15 +1,6 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-// import 'package:today/audio/components/indexed_stack.dart';
-// import 'package:today/audio/components/tabs.dart';
-// import 'package:today/audio/components/tgl.dart';
-// import 'package:today/audio/tabs/audio_context.dart';
-// import 'package:today/audio/tabs/controls.dart';
-// import 'package:today/audio/tabs/logger.dart';
-// import 'package:today/audio/tabs/sources.dart';
-// import 'package:today/audio/tabs/streams.dart';
-// import 'package:today/audio/utils.dart';
 
 import 'package:flutter/material.dart';
 import 'package:today/screens/audio/components/indexed_stack.dart';
@@ -20,10 +11,6 @@ import 'package:today/screens/audio/utils.dart';
 const defaultPlayerCount = 4;
 
 typedef OnError = void Function(Exception exception);
-
-// void main() {
-//   runApp(const MaterialApp(home: ExampleApp()));
-// }
 
 class ExampleApp extends StatefulWidget {
   const ExampleApp({super.key});
@@ -99,7 +86,7 @@ class _ExampleAppState extends State<ExampleApp> {
             selectedAudioPlayer.release();
             audioPlayers.removeAt(selectedPlayerIdx);
           }
-          // Adjust index to be in valid range
+
           if (audioPlayers.isEmpty) {
             selectedPlayerIdx = 0;
           } else if (selectedPlayerIdx >= audioPlayers.length) {
@@ -113,45 +100,8 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('AudioPlayers example'),
-      //   actions: [
-      //     PopupMenuButton<PopupAction>(
-      //       onSelected: _handleAction,
-      //       itemBuilder: (BuildContext context) {
-      //         return PopupAction.values.map((PopupAction choice) {
-      //           return PopupMenuItem<PopupAction>(
-      //             value: choice,
-      //             child: Text(
-      //               choice == PopupAction.add
-      //                   ? 'Add player'
-      //                   : 'Remove selected player',
-      //             ),
-      //           );
-      //         }).toList();
-      //       },
-      //     ),
-      //   ],
-      // ),
-      // backgroundColor: Theme.of(context).primaryColor,
       body: Column(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Center(
-          //     child: SingleChildScrollView(
-          //       scrollDirection: Axis.horizontal,
-          //       child: Tgl(
-          //         key: const Key('playerTgl'),
-          //         options: [for (var i = 1; i <= audioPlayers.length; i++) i]
-          //             .asMap()
-          //             .map((key, val) => MapEntry('player-$key', 'P$val')),
-          //         selected: selectedPlayerIdx,
-          //         onChange: (v) => setState(() => selectedPlayerIdx = v),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Expanded(
             child: audioPlayers.isEmpty
                 ? const Text('No AudioPlayer available!')
@@ -169,32 +119,6 @@ class _ExampleAppState extends State<ExampleApp> {
                                   player: player,
                                 ),
                               ),
-                              // TabData(
-                              //   key: 'controlsTab',
-                              //   label: 'Ctrl',
-                              //   content: ControlsTab(
-                              //     player: player,
-                              //   ),
-                              // ),
-                              // TabData(
-                              //   key: 'streamsTab',
-                              //   label: 'Online Player',
-                              //   content: StreamsTab(
-                              //     player: player,
-                              //   ),
-                              // ),
-                              // TabData(
-                              //   key: 'audioContextTab',
-                              //   label: 'Ctx',
-                              //   content: AudioContextTab(
-                              //     player: player,
-                              //   ),
-                              // ),
-                              // TabData(
-                              //   key: 'loggerTab',
-                              //   label: 'Log',
-                              //   content: const LoggerTab(),
-                              // ),
                             ],
                           ),
                         )

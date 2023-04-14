@@ -24,15 +24,9 @@ class ThemeColors extends GetxController {
     colors: [Color(0xFF42A5F5), Color.fromARGB(15, 42, 197, 244)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    // stops: ,
   );
 
 
-  // SharedPreferences getShared() async {
-  //   return await SharedPreferences.getInstance() as SharedPreferences; 
-  // }
-  
-  // var pref= getShared();
   
   
   ThemeData lightMode(){
@@ -64,6 +58,4 @@ Future<ThemeData> changeTheme()async {
   pref.setBool("theme",true) ;
   return !theme ? darkMode() : lightMode();
 }
-
-  // Get.ch
 }

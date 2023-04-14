@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
-// import 'package:chewie_example/app/theme.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:today/controller/video_controller.dart';
-// ignore: depend_on_referenced_packages
+
 import 'package:video_player/video_player.dart';
 
 class ChewieDemo extends StatefulWidget {
@@ -59,21 +59,6 @@ class _ChewieDemoState extends State<ChewieDemo> {
   }
 
   void _createChewieController() {
-    // final subtitles = [
-    //     Subtitle(
-    //       index: 0,
-    //       start: Duration.zero,
-    //       end: const Duration(seconds: 10),
-    //       text: 'Hello from subtitles',
-    //     ),
-    //     Subtitle(
-    //       index: 0,
-    //       start: const Duration(seconds: 10),
-    //       end: const Duration(seconds: 20),
-    //       text: 'Whats up? :)',
-    //     ),
-    //   ];
-
     final subtitles = [
       Subtitle(
         index: 0,
@@ -101,10 +86,6 @@ class _ChewieDemoState extends State<ChewieDemo> {
         start: const Duration(seconds: 10),
         end: const Duration(seconds: 20),
         text: 'Whats up? :)',
-        // text: const TextSpan(
-        //   text: 'Whats up? :)',
-        //   style: TextStyle(color: Colors.amber, fontSize: 22, fontStyle: FontStyle.italic),
-        // ),
       ),
     ];
 
@@ -114,7 +95,6 @@ class _ChewieDemoState extends State<ChewieDemo> {
       looping: true,
       progressIndicatorDelay:
           bufferDelay != null ? Duration(milliseconds: bufferDelay!) : null,
-
       additionalOptions: (context) {
         return <OptionItem>[
           OptionItem(
@@ -136,22 +116,7 @@ class _ChewieDemoState extends State<ChewieDemo> {
                 style: const TextStyle(color: Colors.black),
               ),
       ),
-
       hideControlsTimer: const Duration(seconds: 1),
-
-      // Try playing around with some of these other options:
-
-      // showControls: false,
-      // materialProgressColors: ChewieProgressColors(
-      //   playedColor: Colors.red,
-      //   handleColor: Colors.blue,
-      //   backgroundColor: Colors.grey,
-      //   bufferedColor: Colors.lightGreen,
-      // ),
-      // placeholder: Container(
-      //   color: Colors.grey,
-      // ),
-      // autoInitialize: true,
     );
   }
 
@@ -169,63 +134,60 @@ class _ChewieDemoState extends State<ChewieDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text(widget.title),
-        // ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Center(
-                child: _chewieController != null &&
-                        _chewieController!
-                            .videoPlayerController.value.isInitialized
-                    ? Chewie(
-                        controller: _chewieController!,
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 20),
-                          Text('Loading'),
-                        ],
-                      ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                _chewieController?.enterFullScreen();
-              },
-              child: const Text('Fullscreen'),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _videoPlayerController1.pause();
-                        _videoPlayerController1.seekTo(Duration.zero);
-                        _createChewieController();
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("Landscape Video"),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: _chewieController != null &&
+                      _chewieController!
+                          .videoPlayerController.value.isInitialized
+                  ? Chewie(
+                      controller: _chewieController!,
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 20),
+                        Text('Loading'),
+                      ],
                     ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              _chewieController?.enterFullScreen();
+            },
+            child: const Text('Fullscreen'),
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _videoPlayerController1.pause();
+                      _videoPlayerController1.seekTo(Duration.zero);
+                      _createChewieController();
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text("Landscape Video"),
                   ),
                 ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _videoPlayerController2.pause();
-                        _videoPlayerController2.seekTo(Duration.zero);
-                        _chewieController = _chewieController!.copyWith(
-                          videoPlayerController: _videoPlayerController2,
-                          autoPlay: true,
-                          looping: true,
-                          /* subtitle: Subtitles([
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _videoPlayerController2.pause();
+                      _videoPlayerController2.seekTo(Duration.zero);
+                      _chewieController = _chewieController!.copyWith(
+                        videoPlayerController: _videoPlayerController2,
+                        autoPlay: true,
+                        looping: true,
+                        /* subtitle: Subtitles([
                             Subtitle(
                               index: 0,
                               start: Duration.zero,
@@ -246,81 +208,80 @@ class _ChewieDemoState extends State<ChewieDemo> {
                               style: const TextStyle(color: Colors.white),
                             ),
                           ), */
-                        );
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("Portrait Video"),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _platform = TargetPlatform.android;
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("Android controls"),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _platform = TargetPlatform.iOS;
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("iOS controls"),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _platform = TargetPlatform.windows;
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("Desktop controls"),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (Platform.isAndroid)
-              ListTile(
-                title: const Text("Delay"),
-                subtitle: DelaySlider(
-                  delay:
-                      _chewieController?.progressIndicatorDelay?.inMilliseconds,
-                  onSave: (delay) async {
-                    if (delay != null) {
-                      bufferDelay = delay == 0 ? null : delay;
-                      await initializePlayer();
-                    }
+                      );
+                    });
                   },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text("Portrait Video"),
+                  ),
                 ),
               )
-          ],
-        ),
-      // ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _platform = TargetPlatform.android;
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text("Android controls"),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _platform = TargetPlatform.iOS;
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text("iOS controls"),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _platform = TargetPlatform.windows;
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text("Desktop controls"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (Platform.isAndroid)
+            ListTile(
+              title: const Text("Delay"),
+              subtitle: DelaySlider(
+                delay:
+                    _chewieController?.progressIndicatorDelay?.inMilliseconds,
+                onSave: (delay) async {
+                  if (delay != null) {
+                    bufferDelay = delay == 0 ? null : delay;
+                    await initializePlayer();
+                  }
+                },
+              ),
+            )
+        ],
+      ),
     );
   }
 }

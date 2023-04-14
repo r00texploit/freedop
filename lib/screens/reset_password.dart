@@ -5,8 +5,6 @@ import 'package:today/controller/auth_controller.dart';
 import 'package:today/screens/comfirm_email.dart';
 import 'package:today/widgets/snackbar.dart';
 
-// import 'ConfirmEmail.dart';
-
 class ForgotPassword extends StatefulWidget {
   static String id = 'forgot-password';
   final String message =
@@ -39,9 +37,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   style: TextStyle(fontSize: 30, color: Colors.white),
                 ),
                 TextFormField(
-                  // onSaved: (newEmail) {
-                  //   _email = newEmail!;
-                  // },
                   controller: controller.email,
                   style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
@@ -50,18 +45,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Icons.mail,
                       color: Colors.white,
                     ),
-                  //   errorStyle: TextStyle(color: Colors.white),
-                  //   labelStyle: TextStyle(color: Colors.white),
-                  //   hintStyle: TextStyle(color: Colors.white),
-                  //   focusedBorder: UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: Colors.white),
-                  //   ),
-                  //   enabledBorder: UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: Colors.white),
-                  //   ),
-                  //   errorBorder: UnderlineInputBorder(
-                  //     borderSide: BorderSide(color: Colors.white),
-                  //   ),
                   ),
                 ),
                 const SizedBox(height: 20),

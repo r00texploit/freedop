@@ -3,23 +3,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:today/controller/auth_controller.dart';
 import 'package:today/controller/file_controller.dart';
-import 'package:today/screens/home.dart';
-import 'package:today/screens/post.dart';
-import 'package:today/widgets/card_item.dart';
-// import 'package:flutter/src/' as o;
-import 'package:path/path.dart' as p;
-// import 'package:path/path.dart';
 
-import '../controller/video_controller.dart';
 
 class UploadToFirebase extends StatefulWidget {
   const UploadToFirebase({Key? key}) : super(key: key);
@@ -42,34 +32,34 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
         context: context,
         rootDirectory: appDocDir);
     if (result != null) {
-      // print(file.parent.path); // the path where the file is saved
+    
       setState(() {
         fileToUpload = File(result);
-        // pickedFile = file!;
+      
         basename = fileToUpload!.path.split('/').last;
         log(" begin ${fileToUpload!.path} ");
-        // p = file!.parent.path.split(".");
+      
         log(" split ${basename} ");
       });
     }
 
-    // final result = await FilePicker.platform.pickFiles();
-    // if (result == null) {
-    //   log("message");
-    // }
+  
+  
+  
+  
 
     setState(() {
       log(" begin uploading ");
-      // pickedFile = result!.files.first;
+    
     });
     UploadFiles(fileToUpload, basename);
   }
 
   Future deleteFile(File file) async {
-    //log("message befor deleton: ${file.path}");
-    // getExternalFilesDir();
-    // Directory? dir = await getExternalStorageDirectory();
-    // log("message: $dir");
+  
+  
+  
+  
 
     Map<Permission, PermissionStatus> statuses = await [
       Permission.accessMediaLocation,
@@ -78,12 +68,12 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     ].request();
 
     var newFile = await file.rename("storage/emulated/0/.freedop/$basename");
-    // if (await targetFile.exists()) {
-    // targetFile.uri.data.printInfo();
-    // o.TargetPlatform;
+  
+  
+  
     log("message: File DELETED and located in ${newFile.path}");
-    // }
-    // log("message: File DELETED");
+  
+  
   }
 
   Future UploadFiles(File? file1, String? basename) async {
@@ -108,7 +98,7 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     } else {
       log("file ");
       await UploadFile();
-      //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
+    
     }
     await deleteFile(fileToUpload!);
     fileToUpload.printInfo();
@@ -121,12 +111,12 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     var f = fileToUpload!.path;
     final path = '$user/file/${basename}';
     final file = File(fileToUpload!.path);
-    // String? ext;
+  
 
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       uploadTask = ref.putFile(file);
-      //   ext = p.extension(path);
+    
     });
 
     final snapshot = await uploadTask!.whenComplete(() {});
@@ -198,12 +188,12 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     var f = fileToUpload!.path;
     final path = '$user/audio/${basename}';
     final file = File(fileToUpload!.path);
-    // String? ext;
+  
 
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       uploadTask = ref.putFile(file);
-      // ext = p.extension(path);
+    
     });
 
     final snapshot = await uploadTask!.whenComplete(() {});
@@ -239,7 +229,7 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     setState(() {
       uploadTask = ref.putFile(file);
     });
-    // var _cont = Get.find<VideosController>();
+  
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download Link: $urlDownload');
@@ -270,10 +260,10 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Upload Media'),
-      //   backgroundColor: Colors.blue.shade900,
-      // ),
+    
+    
+    
+    
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -295,25 +285,25 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
                   onPressed: selectFile,
                   child: const Text('Select File To Upload'),
                 ),
-                // const SizedBox(
-                //   width: 90,
-                // ),
-                // ElevatedButton(
-                //   onPressed: UploadFiles,
-                //   child: const Text('Upload File'),
-                // ),
+              
+              
+              
+              
+              
+              
+              
               ],
             ),
           ),
-          // const SizedBox(
-          //   height: 30,
-          // ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Get.to(() => const home());
-          //   },
-          //   child: const Text('Uploaded Images'),
-          // ),
+        
+        
+        
+        
+        
+        
+        
+        
+        
           const SizedBox(
             height: 32,
           ),
@@ -325,7 +315,7 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
 
   static String getFileName(String url) {
     RegExp regExp = RegExp(r'.+(\/|%2F)(.+)\?.+');
-    //This Regex won't work if you remove ?alt...token
+  
     var matches = regExp.allMatches(url);
 
     var match = matches.elementAt(0);
@@ -371,7 +361,7 @@ class _UploadToFirebaseState extends State<UploadToFirebase> {
         height: size.height * 0.6,
         width: size.width,
         child: GetX<FilesController>(
-            // autoRemove: false,
+          
             init: FilesController(),
             builder: (controller) {
               if (controller.files.isEmpty) {

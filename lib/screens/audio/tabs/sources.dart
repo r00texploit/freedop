@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-// import 'package:today/audio/components/player_widget.dart';
+
 import 'package:today/controller/audio_controller.dart';
 import 'package:today/screens/audio/components/player_widget.dart';
-// import 'package:today/photo/api/firebase_api.dart';
+
 import '../components/tab_content.dart';
 import '../utils.dart';
 import 'package:file_picker/file_picker.dart';
@@ -117,17 +117,12 @@ class _SourcesTabState extends State<SourcesTab>
     }
   }
 
-  // getAudioFromFireStore(){
-
-  // }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     super.build(context);
     return GetX<AudiosController>(
-        // autoRemove: false,
         init: AudiosController(),
         builder: (controller) {
           if (controller.audios.isEmpty) {
@@ -138,17 +133,15 @@ class _SourcesTabState extends State<SourcesTab>
                 return Expanded(
                   child: Container(
                       margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       height: 270,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           gradient: LinearGradient(colors: [
-                            // Color.fromARGB(255, 24, 94, 224),
                             Color(0xFF42A5F5),
                             Color.fromARGB(15, 42, 197, 244),
-                          ])
-                          // color: Colors.amber,
-                          ),
+                          ])),
                       child: Column(
                         children: [
                           Padding(
@@ -158,15 +151,16 @@ class _SourcesTabState extends State<SourcesTab>
                                 bottom: 5,
                               ),
                               child: _createSourceTile(
-                                setSourceKey: Key(controller.audios[index].url!),
+                                setSourceKey:
+                                    Key(controller.audios[index].url!),
                                 title: controller.audios[index].name!,
                                 subtitle: controller.audios[index].name!,
-                                source: UrlSource(controller.audios[index].url!),
+                                source:
+                                    UrlSource(controller.audios[index].url!),
                               )),
-                        Visibility(
-                          visible: true,
-                          child: PlayerWidget(player: player)),
-                
+                          Visibility(
+                              visible: true,
+                              child: PlayerWidget(player: player)),
                         ],
                       )),
                 );
@@ -175,72 +169,6 @@ class _SourcesTabState extends State<SourcesTab>
             );
           }
         });
-    // ,
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-url-remote-wav-2'),
-    //   title: 'Remote URL WAV 2',
-    //   subtitle: 'laser.wav',
-    //   source: UrlSource(wavUrl2),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-url-remote-mp3-1'),
-    //   title: 'Remote URL MP3 1',
-    //   subtitle: 'ambient_c_motion.mp3',
-    //   source: UrlSource(mp3Url1),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-url-remote-mp3-2'),
-    //   title: 'Remote URL MP3 2',
-    //   subtitle: 'nasa_on_a_mission.mp3',
-    //   source: UrlSource(mp3Url2),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-url-remote-m3u8'),
-    //   title: 'Remote URL M3U8',
-    //   subtitle: 'BBC stream',
-    //   source: UrlSource(m3u8StreamUrl),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-url-remote-mpga'),
-    //   title: 'Remote URL MPGA',
-    //   subtitle: 'Times stream',
-    //   source: UrlSource(mpgaStreamUrl),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-asset-wav'),
-    //   title: 'Asset 1',
-    //   subtitle: 'laser.wav',
-    //   source: AssetSource(asset1),
-    // ),
-    // _createSourceTile(
-    //   setSourceKey: const Key('setSource-asset-mp3'),
-    //   title: 'Asset 2',
-    //   subtitle: 'nasa.mp3',
-    //   source: AssetSource(asset2),
-    // ),
-    // _SourceTile(
-    //   setSource: () => _setSourceBytesAsset(_setSource, asset: asset1),
-    //   setSourceKey: const Key('setSource-bytes-local'),
-    //   play: () => _setSourceBytesAsset(_play, asset: asset1),
-    //   title: 'Bytes - Local',
-    //   subtitle: 'laser.wav',
-    // ),
-    // _SourceTile(
-    //   setSource: () => _setSourceBytesRemote(_setSource, url: mp3Url1),
-    //   setSourceKey: const Key('setSource-bytes-remote'),
-    //   play: () => _setSourceBytesRemote(_play, url: mp3Url1),
-    //   title: 'Bytes - Remote',
-    //   subtitle: 'ambient.mp3',
-    // ),
-    // _SourceTile(
-    //   setSource: () => _setSourceFilePicker(_setSource),
-    //   setSourceKey: const Key('setSource-url-local'),
-    //   play: () => _setSourceFilePicker(_play),
-    //   title: 'Device File',
-    //   subtitle: 'Pick local file from device',
-    // ),
-    //   ],
-    // );
   }
 
   @override
@@ -268,8 +196,7 @@ class _SourceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     var len = title.length;
     return ListTile(
-      title: Text(title.substring(0, len>30? 15 : 10)),
-      // subtitle: subtitle != null ? Text(subtitle!) : null,
+      title: Text(title.substring(0, len > 30 ? 15 : 10)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

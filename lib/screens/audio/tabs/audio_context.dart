@@ -1,17 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
-// import '../audio/components/cbx.dart';
-// import 'package:audioplayers_example/components/drop_down.dart';
-// import 'package:audioplayers_example/components/tab_content.dart';
-// import 'package:audioplayers_example/components/tabs.dart';
+
 import 'package:flutter/material.dart';
 import 'package:today/screens/audio/components/cbx.dart';
 import 'package:today/screens/audio/components/drop_down.dart';
 import 'package:today/screens/audio/components/tab_content.dart';
 import 'package:today/screens/audio/components/tabs.dart';
-// import 'package:today/audio/components/cbx.dart';
-// import 'package:today/audio/components/drop_down.dart';
-// import 'package:today/audio/components/tab_content.dart';
-// import 'package:today/audio/components/tabs.dart';
 
 class AudioContextTab extends StatefulWidget {
   final AudioPlayer player;
@@ -28,10 +21,8 @@ class _AudioContextTabState extends State<AudioContextTab>
 
   AudioPlayer get player => widget.player;
 
-  /// Set config for all platforms
   AudioContextConfig audioContextConfig = AudioContextConfig();
 
-  /// Set config for each platform individually
   AudioContext audioContext = const AudioContext();
 
   @override

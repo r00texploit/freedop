@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:today/controller/auth_controller.dart';
-// import 'package:today/photo/home.dart';
+
 import 'package:today/screens/login.dart';
 import 'package:today/widgets/theme.dart';
 import 'package:today/widgets/theme/constants.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   final AuthController controller = Get.put(AuthController());
   var theme = Get.find<ThemeModel>();
-  // var cur = theme.currentTheme();
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeModel>(builder: ((controller) {
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             textType: TextType.TyperAnimatedText,
             textStyle: const TextStyle(fontSize: 30.0, color: Colors.white),
           ));
-      // }));
+      
     }));
   }
 }

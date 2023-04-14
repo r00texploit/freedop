@@ -9,8 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:today/controller/file_controller.dart';
 import 'package:today/controller/home_controller.dart';
-import 'package:today/screens/video.dart';
-// import 'package:today/widgets/property.dart';
 
 class Document extends StatelessWidget {
   final FirebaseAuth? auth = FirebaseAuth.instance;
@@ -34,7 +32,6 @@ class Document extends StatelessWidget {
         width: size.width,
         color: Theme.of(context).backgroundColor,
         child: GetX<FilesController>(
-            // autoRemove: false,
             init: FilesController(),
             builder: (controller) {
               if (controller.files.isEmpty) {
@@ -50,12 +47,9 @@ class Document extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             gradient: LinearGradient(colors: [
-                              // Color.fromARGB(255, 24, 94, 224),
                               Color(0xFF42A5F5),
                               Color.fromARGB(15, 42, 197, 244),
-                            ])
-                            // color: Colors.amber,
-                            ),
+                            ])),
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: 15,
@@ -94,46 +88,10 @@ class Document extends StatelessWidget {
                             ],
                           ),
                         ));
-
-                    // Image.network(
-                    //       controller.photos[index].image!,
-                    //       fit: BoxFit.contain,
-                    //       height: size.height / 2,
-                    //     ),
-                    // ],
-                    // );
                   },
                   itemCount: controller.files.length,
                 );
               }
             }));
   }
-
-  // static Widget buildVideo(BuildContext context) {
-  //   var size = MediaQuery.of(context).size;
-  //   return Container(
-  //       height: size.height * 0.6,
-  //       width: size.width,
-  //       child: GetX<HomeController>(
-  //           // autoRemove: false,
-  //           init: HomeController(),
-  //           builder: (controller) {
-  //             if (controller.videos.isEmpty) {
-  //               return const Center(child: Text('No Video Founded'));
-  //             } else {
-  //               return ListView.builder(
-  //                 itemBuilder: (BuildContext context, int index) {
-  //                   return Hero(
-  //                       tag: Image.network(
-  //                         controller.videos[index].vid!,
-  //                         fit: BoxFit.contain,
-  //                         height: size.height / 2,
-  //                       ),
-  //                       child: VideoScreen(),
-  //                 },
-  //                 itemCount: controller.videos.length,
-  //               );
-  //             }
-  //           }));
-  // }
 }

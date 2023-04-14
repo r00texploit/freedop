@@ -17,7 +17,6 @@ class ThemeModel extends GetxController {
     _preferences = ThemePreferences();
     getPreferences();
   }
-//Switching themes in the flutter apps
   void setisDark(bool value) {
     _isDark = value;
     _preferences.setTheme(value);
@@ -34,7 +33,6 @@ class ThemeModel extends GetxController {
 
   static ThemeData lightmode = ThemeData(
       primaryColor: Color(0xFF3F51B5),
-      // primarySwatch: Colors.indigo,
       backgroundColor: Colors.white
       );
 

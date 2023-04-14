@@ -1,10 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-// import 'package:audioplayers_example/components/btn.dart';
-// import 'package:audioplayers_example/components/list_tile.dart';
-// import 'package:audioplayers_example/components/tab_content.dart';
-// import 'package:audioplayers_example/components/tgl.dart';
-// import 'package:audioplayers_example/components/txt.dart';
-// import 'package:audioplayers_example/utils.dart';
+
 import 'package:flutter/material.dart';
 import 'package:today/screens/audio/components/btn.dart';
 import 'package:today/screens/audio/components/list_tile.dart';
@@ -12,12 +7,6 @@ import 'package:today/screens/audio/components/tab_content.dart';
 import 'package:today/screens/audio/components/tgl.dart';
 import 'package:today/screens/audio/components/txt.dart';
 import 'package:today/screens/audio/utils.dart';
-// import 'package:today/audio/components/btn.dart';
-// import 'package:today/audio/components/list_tile.dart';
-// import 'package:today/audio/components/tab_content.dart';
-// import 'package:today/audio/components/tgl.dart';
-// import 'package:today/audio/components/txt.dart';
-// import 'package:today/audio/utils.dart';
 
 class ControlsTab extends StatefulWidget {
   final AudioPlayer player;
@@ -34,7 +23,7 @@ class _ControlsTabState extends State<ControlsTab>
 
   Future<void> _update(Future<void> Function() fn) async {
     await fn();
-    // update everyone who listens to "player"
+
     setState(() {});
   }
 

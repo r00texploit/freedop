@@ -24,14 +24,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // final FocusNode myFocusNodeEmailLogin = FocusNode();
-  // final FocusNode myFocusNodePasswordLogin = FocusNode();
-  // final FocusNode myFocusNodePassword = FocusNode();
-  // final FocusNode myFocusNodeEmail = FocusNode();
-  // final FocusNode myFocusNodeName = FocusNode();
-  // final FocusNode myFocusNodeNumber = FocusNode();
-  // PageController _pageController = PageController();
-
   AuthController controller = Get.find();
   late String email;
   late String name;
@@ -102,7 +94,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(builder: (logic) {
       return Scaffold(
-        // backgroundColor: ThemeColors.loginGradientStart,
         body: Container(
           decoration:
               const BoxDecoration(gradient: ThemeColors.primaryGradient),
@@ -129,8 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: 90,
                   child: GestureDetector(
                     onTap: () async {
-                      // log("message");
-
                       final result = await FilePicker.platform.pickFiles();
                       if (result == null) {
                         log("message");
@@ -142,26 +131,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       });
                     },
                     child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: pickedFile == null
-                          ? const Icon(
-                              Icons.add_photo_alternate_outlined,
-                              size: 40,
-                            )
-                          : CircleAvatar(
-                              radius: 50.0,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: FileImage(
-                                File(pickedFile!.path!),
-                                // fit: BoxFit.cover,
-                                scale: 1.0,
-                              ),
-                            ), // DecorationImage(image: FileImage(File(file.path)),),
-                    ),
+                        backgroundColor: Colors.transparent,
+                        child: pickedFile == null
+                            ? const Icon(
+                                Icons.add_photo_alternate_outlined,
+                                size: 40,
+                              )
+                            : CircleAvatar(
+                                radius: 50.0,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: FileImage(
+                                  File(pickedFile!.path!),
+                                  scale: 1.0,
+                                ),
+                              )),
                   ),
                 ),
-                // ),
-
                 Column(
                   children: [
                     TextField(
@@ -169,7 +154,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textAlign: TextAlign.center,
                         onChanged: (value) {
                           logic.name.text = value;
-                          //Do something with the user input.
                         },
                         decoration: nameDecoration.copyWith(
                           hintText: 'Enter your name',
@@ -182,7 +166,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textAlign: TextAlign.center,
                         onChanged: (value) {
                           logic.email.text = value;
-                          //Do something with the user input.
                         },
                         decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Enter your email',
@@ -195,7 +178,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textAlign: TextAlign.center,
                         onChanged: (value) {
                           logic.password.text = value;
-                          //Do something with the user input.
                         },
                         decoration: passDecoration.copyWith(
                             hintText: 'Enter your password.')),
@@ -214,31 +196,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             onPressed: () {
                               logic.register(pickedFile);
-                              // try {
-                              //   logic.register();
-                              // } catch (e) {
-                              //   print(e);
-                              // }
-                              //   final user = await _auth.signInWithEmailAndPassword(
-                              //       email: email, password: password);
-                              //   if (user != null) {
-                              //     Navigator.push(context,
-                              //         MaterialPageRoute(builder: (context) => home()));
-                              //   }
-                              // } catch (e) {
-                              //   print(e);
-                              // }
-                              // setState(() {
-                              //   showSpinner = false;
-                              // });
                             })),
                   ],
                 ),
-                // TextButton(
-                //     child: Text('Register'),
-                //     onPressed: () {
-                //       Get.to(()=>RegisterScreen());
-                //     }),
               ],
             ),
           ),
@@ -247,236 +207,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 }
-
- /*  Widget _buildSignUp(BuildContext context) { */
-  //   return Container(
-  //     padding: const EdgeInsets.only(top: 15.0),
-  //     child: Column(
-  //       children: <Widget>[
-  //         Stack(
-  //           clipBehavior: Clip.none,
-  //           alignment: Alignment.topCenter,
-  //           children: <Widget>[
-  //             Card(
-  //               elevation: 2.0,
-  //               color: Colors.white,
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(8.0),
-  //               ),
-  //               child: SizedBox(
-  //                 width: 300.0,
-  //                 height: 460.0,
-  //                 child: Column(
-  //                   children: <Widget>[
-  //                     Padding(
-  //                       padding: const EdgeInsets.only(
-  //                           top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-  //                       child: GetBuilder<AuthController>(
-  //                         builder: (logic) {
-  //                           return TextField(
-  //                             focusNode: myFocusNodeName,
-  //                             controller: logic.name,
-  //                             keyboardType: TextInputType.text,
-  //                             textCapitalization: TextCapitalization.words,
-  //                             style: const TextStyle(
-  //                                 fontFamily: "WorkSansSemiBold",
-  //                                 fontSize: 16.0,
-  //                                 color: Colors.black),
-  //                             decoration: const InputDecoration(
-  //                               border: InputBorder.none,
-  //                               icon: Icon(
-  //                                 Icons.person,
-  //                                 color: Colors.black,
-  //                               ),
-  //                               hintText: "الاسم",
-  //                               hintStyle: TextStyle(
-  //                                   fontFamily: "WorkSansSemiBold",
-  //                                   fontSize: 16.0),
-  //                             ),
-  //                           );
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       width: 250.0,
-  //                       height: 1.0,
-  //                       color: Colors.grey[400],
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.only(
-  //                           top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-  //                       child: GetBuilder<AuthController>(
-  //                         builder: (logic) {
-  //                           return TextField(
-  //                             focusNode: myFocusNodeEmail,
-  //                             controller: logic.email,
-  //                             keyboardType: TextInputType.emailAddress,
-  //                             style: const TextStyle(
-  //                                 fontFamily: "WorkSansSemiBold",
-  //                                 fontSize: 16.0,
-  //                                 color: Colors.black),
-  //                             decoration: const InputDecoration(
-  //                               border: InputBorder.none,
-  //                               icon: Icon(
-  //                                 Icons.email,
-  //                                 color: Colors.black,
-  //                               ),
-  //                               hintText: "البريد الالكتروني",
-  //                               hintStyle: TextStyle(
-  //                                   fontFamily: "WorkSansSemiBold",
-  //                                   fontSize: 16.0),
-  //                             ),
-  //                           );
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       width: 250.0,
-  //                       height: 1.0,
-  //                       color: Colors.grey[400],
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.only(
-  //                           top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-  //                       child: GetBuilder<AuthController>(
-  //                         id: 'reOb',
-  //                         builder: (logic) {
-  //                           return TextField(
-  //                             focusNode: myFocusNodePassword,
-  //                             controller: logic.password,
-  //                             obscureText: logic.obscureTextSignup,
-  //                             style: const TextStyle(
-  //                                 fontFamily: "WorkSansSemiBold",
-  //                                 fontSize: 16.0,
-  //                                 color: Colors.black),
-  //                             decoration: InputDecoration(
-  //                                 border: InputBorder.none,
-  //                                 icon: const Icon(
-  //                                   Icons.lock,
-  //                                   color: Colors.black,
-  //                                 ),
-  //                                 hintText: "كلمة السر",
-  //                                 hintStyle: const TextStyle(
-  //                                     fontFamily: "WorkSansSemiBold",
-  //                                     fontSize: 16.0),
-  //                                 suffixIcon: GestureDetector(
-  //                                   onTap: () {
-  //                                     logic.toggleSignup();
-  //                                   },
-  //                                   child: Icon(
-  //                                     logic.obscureTextSignup
-  //                                         ? Icons.visibility
-  //                                         : Icons.visibility_off,
-  //                                     size: 15.0,
-  //                                     color: Colors.black,
-  //                                   ),
-  //                                 )),
-  //                           );
-  //                         },
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       width: 250.0,
-  //                       height: 1.0,
-  //                       color: Colors.grey[400],
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.only(
-  //                           top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-  //                       child: GetBuilder<AuthController>(
-  //                         id: 'RreOb',
-  //                         builder: (logic) {
-  //                           return TextField(
-  //                             controller: logic.repassword,
-  //                             obscureText: logic.obscureTextSignupConfirm,
-  //                             style: const TextStyle(
-  //                                 fontFamily: "WorkSansSemiBold",
-  //                                 fontSize: 16.0,
-  //                                 color: Colors.black),
-  //                             decoration: InputDecoration(
-  //                                 border: InputBorder.none,
-  //                                 icon: const Icon(
-  //                                   Icons.lock,
-  //                                   color: Colors.black,
-  //                                 ),
-  //                                 hintText: "تأكيد كلمة السر",
-  //                                 hintStyle: const TextStyle(
-  //                                     fontFamily: "WorkSansSemiBold",
-  //                                     fontSize: 16.0),
-  //                                 suffixIcon: GestureDetector(
-  //                                   onTap: () {
-  //                                     logic.toggleSignupConfirm();
-  //                                   },
-  //                                   child: Icon(
-  //                                     logic.obscureTextSignupConfirm
-  //                                         ? Icons.visibility
-  //                                         : Icons.visibility_off,
-  //                                     size: 15.0,
-  //                                     color: Colors.black,
-  //                                   ),
-  //                                 )),
-  //                           );
-  //                         },
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //             Container(
-  //               margin: EdgeInsets.only(top: 450.0),
-  //               decoration: const BoxDecoration(
-  //                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
-  //                 boxShadow: <BoxShadow>[
-  //                   BoxShadow(
-  //                     color: theme.Colors.loginGradientStart,
-  //                     offset: Offset(1.0, 6.0),
-  //                     blurRadius: 20.0,
-  //                   ),
-  //                   BoxShadow(
-  //                     color: theme.Colors.loginGradientEnd,
-  //                     offset: Offset(1.0, 6.0),
-  //                     blurRadius: 20.0,
-  //                   ),
-  //                 ],
-  //                 gradient: LinearGradient(
-  //                     colors: [
-  //                       theme.Colors.loginGradientEnd,
-  //                       theme.Colors.loginGradientStart
-  //                     ],
-  //                     begin: FractionalOffset(0.2, 0.2),
-  //                     end: FractionalOffset(1.0, 1.0),
-  //                     stops: [0.0, 1.0],
-  //                     tileMode: TileMode.clamp),
-  //               ),
-  //               child: GetBuilder<AuthController>(
-  //                 builder: (logic) {
-  //                   return MaterialButton(
-  //                     highlightColor: Colors.transparent,
-  //                     splashColor: theme.Colors.loginGradientEnd,
-  //                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-  //                     child: const Padding(
-  //                       padding: EdgeInsets.symmetric(
-  //                           vertical: 10.0, horizontal: 42.0),
-  //                       child: Text(
-  //                         "تسجيل",
-  //                         style: TextStyle(
-  //                             color: Colors.white,
-  //                             fontSize: 25.0,
-  //                             fontFamily: "WorkSansBold"),
-  //                       ),
-  //                     ),
-  //                     onPressed: () async {
-  //                       logic.register();
-  //                     },
-  //                   );
-  //                 },
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-

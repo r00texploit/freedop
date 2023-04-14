@@ -12,7 +12,6 @@ class Card_d extends StatefulWidget {
   State<Card_d> createState() => _Card_dState();
 }
 
-// ignore: camel_case_types
 class _Card_dState extends State<Card_d> {
   void showBar(BuildContext context, String msg) {
     var bar = SnackBar(

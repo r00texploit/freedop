@@ -10,8 +10,6 @@ import 'package:today/widgets/theme.dart';
 
 import '../controller/auth_controller.dart';
 
-//code for designing the UI of our text field where the user writes his email id or password
-
 const kTextFieldDecoration = InputDecoration(
     icon: Icon(
       Icons.email,
@@ -68,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(builder: (logic) {
       return Scaffold(
-        // backgroundColor: Colors.white,
         body: Container(
           decoration:
               const BoxDecoration(gradient: ThemeColors.primaryGradient),
@@ -87,9 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 30,
                   ),
                 ),
-                // const SizedBox(
-                //   height: 15,
-                // ),
                 const Text(
                   "Wellcome Again!!",
                   style: TextStyle(
@@ -120,7 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                         onChanged: (value) {
                           email = value;
-                          //Do something with the user input.
                         },
                         decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Enter your email',
@@ -133,7 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                         onChanged: (value) {
                           password = value;
-                          //Do something with the user input.
                         },
                         decoration: passDecoration.copyWith(
                             hintText: 'Enter your password.')),
@@ -155,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               showSpinner = true;
                             });
                             try {
-                              //logic.login();
                               showdilog();
                               final user =
                                   await _auth.signInWithEmailAndPassword(
@@ -177,39 +168,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    // Container(
-                    //     width: MediaQuery.of(context).size.width,
-                    //     decoration: BoxDecoration(
-                    //         gradient: ThemeColors.loginbtn,
-                    //         borderRadius: BorderRadius.circular(20)),
-                    //     child: 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    child: const Text(
-                                      'Forget Password?',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Get.to(() => ForgotPassword());
-                                    }),
-                              ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            child: const Text(
+                              'Forget Password?',
+                              style: TextStyle(color: Colors.white),
                             ),
+                            onPressed: () {
+                              Get.to(() => ForgotPassword());
+                            }),
+                      ],
+                    ),
                     Row(
                       children: [
-                        Text("Don't Have Account?",style: TextStyle(color: Colors.white),),
-                            TextButton(
-                                child: const Text(
-                                  'Register',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () {
-                                  Get.to(() => const RegisterScreen());
-                                }),
+                        Text(
+                          "Don't Have Account?",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        TextButton(
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              Get.to(() => const RegisterScreen());
+                            }),
                       ],
                     )
-                            // ),
                   ],
                 ),
               ],

@@ -49,7 +49,7 @@ class AuthController extends GetxController {
     email = TextEditingController();
     password = TextEditingController();
     name = TextEditingController();
-    // profileurl = "";
+
     _user = Rx<User?>(auth.currentUser);
     _user.bindStream(onAuthStateChanged);
     ever(_user, _initialScreen);
@@ -166,8 +166,6 @@ class AuthController extends GetxController {
         email.text.isNotEmpty &&
         password.text.isNotEmpty) {
       try {
-        // SmartDialog.showLoading();
-        // var con = AuthController();
         showdilog();
         final credential = await _firebaseAuth.createUserWithEmailAndPassword(
             email: email.text, password: password.text);
@@ -212,22 +210,11 @@ class AuthController extends GetxController {
           "About User", "User message", 'الرجاء ادخال جميع البيانات', false);
     }
 
-    // setState(() {
     showSpinner = true;
     update();
-    // });
   }
 
-  // var uid = auth.currentUser!.uid;
-  // var collectionReference = FirebaseFirestore.instance.collection("user");
-
-  // Stream<List<Users>> getProfilePhoto() => collectionReference
-  //     .where('uid', isEqualTo: uid)
-  //     .snapshots()
-  //     .map((query) => query.docs.map((item) => Users.fromMap(item)).toList());
-
   void login() async {
-    // user_profile.bindStream(getProfilePhoto());
     if (email.text.isNotEmpty && password.text.isNotEmpty) {
       try {
         showdilog();
@@ -241,7 +228,7 @@ class AuthController extends GetxController {
         email.clear();
         password.clear();
         profileurl = profile;
-        // var pu = await FirebaseFirestore.instance.collection("user").where("uid",isEqualTo: auth.currentUser!.uid).get();
+
         update();
         log("message:${profile}");
         Get.offAll(() => const home());
@@ -275,26 +262,22 @@ class AuthController extends GetxController {
     name.clear();
     update();
   }
+
   passwordReset() async {
     try {
-      // var cont = Get.put(AuthController());
       formKey.currentState!.save();
       final user = await auth.sendPasswordResetEmail(email: email.text);
 
-      // ignore: use_build_context_synchronously
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) {
-      //     return ConfirmEmail(message: widget.message,);
-      //   }),
-      // );
       Get.back();
-      showbar("Reset","Password","An email has just been sent to you, Click the link provided to complete password reset",true);
+      showbar(
+          "Reset",
+          "Password",
+          "An email has just been sent to you, Click the link provided to complete password reset",
+          true);
     } catch (e) {
       print(e);
     }
   }
-
 
   updatePassword() async {
     await FirebaseAuth.instance.currentUser!.updatePassword(password.text);
@@ -312,7 +295,6 @@ class AuthController extends GetxController {
       log("message");
     }
 
-    // setState(() {
     log(" begin uploading ");
     var pickedFile = result!.files.first;
     var ref = FirebaseStorage.instance.ref().child(
@@ -325,7 +307,5 @@ class AuthController extends GetxController {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({"profile": prourl});
     log("message: Done");
-
-    // });
   }
 }

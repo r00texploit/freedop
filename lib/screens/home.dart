@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:today/audio/main.dart';
-// import 'package:today/photo/home.dart';
+
 import 'package:today/screens/audio/main.dart';
 import 'package:today/screens/document.dart';
-// import 'package:today/audio/screens/app.dart';
+
 import 'package:today/screens/new_video.dart';
 import 'package:today/screens/photo/home.dart';
-import 'package:today/screens/post.dart';
-import 'package:today/screens/profile.dart';
+
+import 'package:today/screens/settings.dart';
 import 'package:today/screens/video_hero_animation.dart';
-import 'package:today/screens/video_test.dart';
+
 import 'package:today/widgets/App_bar.dart';
 import 'package:today/widgets/file_upload.dart';
 import 'package:today/widgets/file_upload.dart' as upload;
-import 'package:today/widgets/popup.dart';
-import 'package:today/widgets/popupmenu.dart';
 
-import 'more.dart';
+import 'user_name.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -30,15 +27,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   final int _currentPage = 0;
   final _pageController = PageController();
   TabController? _controller;
-  //
-  // List post_itme = [
-  //   ['sanad', 'power', '40', '1', '2', '1k', 'sn.jpg', '20', '2'],
-  //   ['mujtaba', 'reach', '50', '2', '4', '1k', 'sn.jpg', '30', '5'],
-  //   ['kk', 'pore', '20', '1', '2', '1k', 'sn.jpg', '20', '2'],
-  // ];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = TabController(length: 4, vsync: this);
   }
@@ -48,14 +39,17 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     var size = MediaQuery.of(context).size;
     var menu = SafeArea(
       child: PopupMenuButton(
-          // key: _menuKey,
           itemBuilder: (_) => const <PopupMenuItem<String>>[
                 PopupMenuItem<String>(child: Text('Doge'), value: 'Doge'),
                 PopupMenuItem<String>(child: Text('Lion'), value: 'Lion'),
               ],
           onSelected: (_) {}),
     );
-    List<Widget> _generate = [const home(), const UploadToFirebase(), const MyProfile()];
+    List<Widget> _generate = [
+      const home(),
+      const UploadToFirebase(),
+      const MyProfile()
+    ];
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -126,17 +120,13 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 controller: _controller,
                 children: [
-                  // first tab bar view widget
                   Container(
                     color: Colors.white,
                     child: MainPage(),
-                    // post.buildPhoto(context),
                   ),
-
-                  // second tab bar viiew widget
                   Container(
                     color: Colors.pink,
-                    child: ChewieDemo(), //const VideoPlayersList(),
+                    child: ChewieDemo(),
                   ),
                   Container(
                     color: Colors.pink,
